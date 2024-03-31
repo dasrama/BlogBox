@@ -1,7 +1,10 @@
 from fastapi import FastAPI, Response, status, HTTPException, Depends
 from sqlalchemy.orm import Session
 from . import models, schemas
-from .database import get_db
+from .database import get_db,engine
+import psycopg2
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
