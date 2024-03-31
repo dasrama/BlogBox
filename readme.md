@@ -1,4 +1,4 @@
-## to run the API:
+## run the server :
 ```
 uvicorn app.main:app
 ```
