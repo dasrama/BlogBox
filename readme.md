@@ -7,8 +7,8 @@ git clone
 ```
 pip install requirements.txt
 ```
--3. Set the environment variables in the .env file 
--4. Run the server 
+- 3. Set the environment variables in the .env file 
+- 4. Run the server 
 ```
 uvicorn app.main:app
 ```
