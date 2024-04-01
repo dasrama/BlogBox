@@ -4,7 +4,6 @@ from sqlalchemy.orm import sessionmaker
 from .config import settings
 
 
-#vSQLALCHEMY_DATABASE_URL = 'postgresql://postgres:root@localhost:5432/fastapi'
 SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOST}:{settings.DATABASE_PORT}/{settings.DATABASE_NAME}'
 
 
