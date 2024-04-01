@@ -1,7 +1,7 @@
 ## run the server locally :
 - Clone the repository
 ```
-git clone
+git clone https://github.com/dasrama/BlogBox.git
 ```
 - Install the modules :
 ```
