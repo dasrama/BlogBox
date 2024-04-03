@@ -16,7 +16,7 @@ def get_posts(db: Session = Depends(get_db)):
     return posts
 
 
-@app.post("/posts", status_code=status.HTTP_201_CREATED)
+@app.post("/posts", status_code=status.HTTP_201_CREATED,response_model=schemas.CreatePostResponse)
 def create_posts(post: schemas.Post, db: Session = Depends(get_db)):
     new_post = models.Post(**post.dict())
     db.add(new_post)
@@ -26,7 +26,7 @@ def create_posts(post: schemas.Post, db: Session = Depends(get_db)):
     return new_post
 
 
-@app.get("/posts/{id}",response_model = schemas.Post)
+@app.get("/posts/{id}",response_model = schemas.GetPostResponse)
 def get_post(id: int, db: Session = Depends(get_db)):
     post = db.query(models.Post).filter(models.Post.id == id)
 
