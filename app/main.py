@@ -9,10 +9,11 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
-@app.get("/posts")
+@app.get("/posts", response_model = list[schemas.Post])
 def get_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     # print(type(posts))
+    # type : list having Post as elements
     return posts
 
 
