@@ -9,7 +9,7 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
-@app.get("/posts", response_model = list[schemas.Post])
+@app.get("/posts", response_model = list[schemas.GetPostResponse])
 def get_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()
     # print(type(posts))
@@ -20,6 +20,7 @@ def get_posts(db: Session = Depends(get_db)):
 @app.post("/posts", status_code=status.HTTP_201_CREATED,response_model=schemas.CreatePostResponse)
 def create_posts(post: schemas.Post, db: Session = Depends(get_db)):
     new_post = models.Post(**post.dict())
+    # **post.dict() unpacks the dictionary post into keyword arguments
     db.add(new_post)
     db.commit()
     db.refresh(new_post)
