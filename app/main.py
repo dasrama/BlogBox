@@ -4,7 +4,9 @@ from . import models, schemas
 from .database import get_db,engine
 import psycopg2
 
+# will create all the corresponding tables in the database based on models defined in model.py .
 models.Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI()
 
