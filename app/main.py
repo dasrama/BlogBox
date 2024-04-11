@@ -3,6 +3,10 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 from .database import get_db,engine
 import psycopg2
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated ="auto")
+# here we are specifying the algorithm used for hashing : i.e bcrypt
 
 # will create all the corresponding tables in the database based on models defined in model.py .
 models.Base.metadata.create_all(bind=engine)
@@ -77,6 +81,11 @@ def update_post(id: int, update_post: schemas.Post, db: Session = Depends(get_db
 
 @app.post("/users", status_code=status.HTTP_201_CREATED, response_model=schemas.CreateUserResponse)
 def create_user(user: schemas.CreateUserRequest, db: Session = Depends(get_db)):
+    # print(user.password)
+    # hash the password - user.password
+    hashedPassword = pwd_context.hash(user.password)
+    user.password = hashedPassword
+
     new_user = models.User(**user.dict())
     #print(user.email)
     query = db.query(models.User.email).filter(models.User.email == user.email)
