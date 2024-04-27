@@ -23,7 +23,7 @@ git clone https://github.com/dasrama/BlogBox.git
 
 ### Create a virtual environment:
 ```
-    py -3 -m venv venv
+py -3 -m venv venv
 ```
 
 ### Activate the virtual environment:
