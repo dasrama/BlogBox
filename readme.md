@@ -14,16 +14,34 @@
 
 
 ## 📦 run the application locally :
-1. **Clone the repository**
+### **Clone the repository**
 ```
 git clone https://github.com/dasrama/BlogBox.git
 ``` 
-2. **Install dependencies**:
+### Create a virtual environment:
+  - In the terminal, navigate to your project directory using the cd command. Once inside your project directory, run the following  command to create a virtual environment:
+
+### Create a virtual environment:
 ```
-pip install requirements.txt
+    py -3 -m venv venv
 ```
-3. **Set the environment variables in the .env file**:
-4. **run the application**
+
+### Activate the virtual environment:
+```
+.\venv\Scripts\activate
+```
+
+### Install dependencies :
+```
+pip install -r requirements.txt
+```
+
+### Configure Visual Studio Code to use the virtual environment:
+- search for <Python: Select Interpreter>. Choose the interpreter located within your virtual environment (typically under the venv directory).
+
+### **Set the environment variables in the .env file**:
+
+### **run the application**
 ```
 uvicorn app.main:app --reload
 ```
