@@ -23,7 +23,7 @@ class CreatePostResponse(BaseModel):
     title: str
     content: str
     published: bool = True
-    created_at : datetime
+    created_at: datetime
 
 
 class GetPostResponse(CreatePostResponse):
@@ -32,17 +32,23 @@ class GetPostResponse(CreatePostResponse):
 
 class CreateUserRequest(BaseModel):
     email: EmailStr
-    password : str
+    password: str
 
 
 class CreateUserResponse(BaseModel):
-    id : int
+    id: int
     email: EmailStr
        
 
 class UserLogin(BaseModel):
-    email : EmailStr
-    password : str
+    email: EmailStr
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str    
+
+    
     
 
 
