@@ -7,7 +7,7 @@ from ..database import get_db
 
 router = APIRouter()
 
-@router.get("/", response_description="Get Posts", response_model = list[schemas.GetPostResponse])
+@router.get(" ", response_description="Get Posts", response_model = list[schemas.GetPostResponse])
 def get_posts(db: Session = Depends(get_db), current_id = Depends(oauth2.get_current_user)):
     posts = db.query(models.Post).all()
     # print(type(posts))
@@ -15,7 +15,7 @@ def get_posts(db: Session = Depends(get_db), current_id = Depends(oauth2.get_cur
     return posts
 
 
-@router.post("/", response_description="Create Post", status_code=status.HTTP_201_CREATED, response_model=schemas.CreatePostResponse)
+@router.post(" ", response_description="Create Post", status_code=status.HTTP_201_CREATED, response_model=schemas.CreatePostResponse)
 def create_posts(post: schemas.Post, db: Session=Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     new_post = models.Post(**post.dict())
     # print(type(current_id))   -> int
