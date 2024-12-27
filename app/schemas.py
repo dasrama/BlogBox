@@ -2,33 +2,35 @@ from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import Optional
 
-class Post(BaseModel):
+class PostBase(BaseModel):
     title: str
     content: str
     published: bool = False
-    #created_at : datetime
 
     """class Config:
         orm_mode = True"""
 
-class CreatePostRequest(BaseModel):
-    title: str
-    content: str
+class CreatePostRequest(PostBase):
+    owner_id: int
 
 
 class UpdatePostRequest(CreatePostRequest):
     ...
 
 
-class CreatePostResponse(BaseModel):
-    title: str
-    content: str
-    published: bool = True
+class CreatePostResponse(PostBase):
+    owner_id: int
     created_at: datetime
 
 
-class GetPostResponse(CreatePostResponse):
-    ...
+class Post(PostBase):
+    id: int
+    created_at: datetime
+    owner_id: int
+
+    """class Config:
+        orm_mode = True"""
+        
 
 
 class CreateUserRequest(BaseModel):
