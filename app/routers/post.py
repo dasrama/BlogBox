@@ -5,9 +5,9 @@ from .. import models, schemas, oauth2
 from ..database import get_db
 
 
-router = APIRouter(tags=["Post"])
+router = APIRouter()
 
-@router.get("/posts", response_description="Get Posts", response_model = list[schemas.GetPostResponse])
+@router.get("/", response_description="Get Posts", response_model = list[schemas.GetPostResponse])
 def get_posts(db: Session = Depends(get_db), current_id = Depends(oauth2.get_current_user)):
     posts = db.query(models.Post).all()
     # print(type(posts))
@@ -15,11 +15,15 @@ def get_posts(db: Session = Depends(get_db), current_id = Depends(oauth2.get_cur
     return posts
 
 
-@router.post("/posts", response_description="Create Post", status_code=status.HTTP_201_CREATED, response_model=schemas.CreatePostResponse)
-def create_posts(post: schemas.Post, db: Session=Depends(get_db), current_id = Depends(oauth2.get_current_user)):
+@router.post("/", response_description="Create Post", status_code=status.HTTP_201_CREATED, response_model=schemas.CreatePostResponse)
+def create_posts(post: schemas.Post, db: Session=Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     new_post = models.Post(**post.dict())
     # print(type(current_id))   -> int
     # **post.dict() unpacks the dictionary post into keyword arguments
+    print(" ")
+    print(current_user.email)
+    print(current_user.name)
+    print(" ")
     db.add(new_post)
     db.commit()
     db.refresh(new_post)
@@ -27,7 +31,7 @@ def create_posts(post: schemas.Post, db: Session=Depends(get_db), current_id = D
     return new_post
 
 
-@router.get("/posts/{id}", response_description="Get Anyone Post", response_model=schemas.GetPostResponse)
+@router.get("/{id}", response_description="Get Anyone Post", response_model=schemas.GetPostResponse)
 def get_post(id, db: Session = Depends(get_db), current_id = Depends(oauth2.get_current_user)):
     post = db.query(models.Post).filter(models.Post.id == id).first()
 
@@ -38,7 +42,7 @@ def get_post(id, db: Session = Depends(get_db), current_id = Depends(oauth2.get_
     return post
 
 
-@router.delete("/posts/{id}", response_description="Delete post", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{id}", response_description="Delete post", status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id, db: Session = Depends(get_db), current_id = Depends(oauth2.get_current_user)):
     post = db.query(models.Post).filter(models.Post.id == id)
 
@@ -52,7 +56,7 @@ def delete_post(id, db: Session = Depends(get_db), current_id = Depends(oauth2.g
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-@router.put("/posts/{id}", response_description="Update Post")
+@router.put("/{id}", response_description="Update Post")
 def update_post(id, update_post: schemas.Post, db: Session = Depends(get_db), current_id = Depends(oauth2.get_current_user)):
     post = db.query(models.Post).filter(models.Post.id == id).first()
 
