@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from . import models, schemas,utils
-from .database import get_db,engine
+from app import models
+from app.database import engine
 
 from app.routers.auth import router as AuthBackend
 from app.routers.post import router as PostRouter

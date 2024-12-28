@@ -7,7 +7,10 @@ from sqlalchemy.orm import Session
 
 from .schemas import Token, TokenData
 from . import schemas, database, models
+from app.config import Settings
 
+
+settings = Settings()
 
 oauth_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
@@ -15,25 +18,21 @@ oauth_scheme = OAuth2PasswordBearer(tokenUrl="login")
 # ALGORITHM
 # ACCESS_TOKEN_EXPIRY_MINUTES
 
-SECRET_KEY = "28h49r4024hf248hf0g84t79gygrfhbnrweiqujh0q83390u2qhn0821jsq"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
-
 def create_access_token(data: dict) -> Token:
     # provided a copy of data to work on without changing the actual data
     to_encode = data.copy()
-    expiry = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expiry = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
     # added extra information by adding to the existing data
     to_encode.update({"exp": expiry})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
     return encoded_jwt
 
 
 def verify_access_token(token: str, credential_exception) -> TokenData:
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         id: str = payload.get("user_id")
 
         if not id:
