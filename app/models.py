@@ -28,6 +28,13 @@ class User(Base):
 
     """ to define rollback condition if user enters invalid content to further prevent the count of id to original one"""
 
+
+class Vote(Base):
+    __tablename__ = "votes"
+
+    post_id = Column(Integer, ForeignKey("posts.id", ondelete="Cascade"), nullable=False, primary_key=True,)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="Cascade"), primary_key=True, nullable=False)
+
     
 
 
