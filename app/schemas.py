@@ -55,6 +55,11 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[int]
+
+
+class Vote(BaseModel):
+    post_id: int
+    dir: int
     
     
 

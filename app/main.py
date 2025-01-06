@@ -5,6 +5,7 @@ from app.database import engine
 from app.routers.auth import router as AuthBackend
 from app.routers.post import router as PostRouter
 from app.routers.user import router as UserRouter
+from app.routers.vote import router as VoteRouter
 
 
 # will create all the corresponding tables in the database based on models defined in model.py .
@@ -15,4 +16,5 @@ app = FastAPI()
 app.include_router(AuthBackend, tags=["Authentication"])
 app.include_router(PostRouter, tags=["Post"], prefix="/post")
 app.include_router(UserRouter, tags=["User"], prefix="/user")
+app.include_router(VoteRouter, tags=["Vote"], prefix="/vote")
 
